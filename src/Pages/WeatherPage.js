@@ -151,7 +151,7 @@ const WeatherPage = () => {
         {/* 天氣圖 */}
         {show &&
           <section className="weather-part">
-            <img src={iconImgsrc} alt="Wrather Icon" />
+            <img src={`http://chiayuuliu.github.io/myWebsite${iconImgsrc}`} alt="Wrather Icon" />
             {/* 氣溫 */}
             <div className="temp">
               {Math.floor(tempData.temp)}°C
