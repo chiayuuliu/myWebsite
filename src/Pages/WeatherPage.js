@@ -4,7 +4,9 @@ import '../Style/Weather.scss'
 import { MdArrowBackIosNew, MdLocationOn } from 'react-icons/md';
 import { FaTint } from 'react-icons/fa';
 import { IoMdThermometer } from 'react-icons/io';
-import SpinnerSmall from '../Component/SpinnerSmall';
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
+
 const WeatherPage = () => {
   const [searchCity, setSearchCity] = useState("")
   const [wrongCity, setWrongCity] = useState(false)
@@ -97,7 +99,7 @@ const WeatherPage = () => {
               {searchCity}  不是一個城市名...
             </p>
           }
-          <div className="inputWrap">
+          <form action="">
             <input
               type="text"
               placeholder="輸入城市名 (ex:Taipei)"
@@ -117,16 +119,34 @@ const WeatherPage = () => {
                 }
               }}
             />
-            <button>送出</button>
-          </div>
-          <div className="separator"></div>
-          <button
+            <div className="separator"></div>
+            <button
+              type='submit'
+              onClick={(e) => {
+                e.preventDefault()
+                if (!searchCity) {
+                  Swal.fire({
+                    icon: "warning",
+                    text: "請輸入城市名稱",
+                    showConfirmButton: true,
+                  });
+                  return
+                } else {
+                  getWeather(weatherURL)
+
+                }
+              }}>
+              送出
+            </button>
+          </form>
+
+          {/* <button
             disabled={btnLoading}
             onClick={() => {
               getLocation()
             }}>
             {btnLoading ? <SpinnerSmall /> : " 目前位置天氣"}
-          </button>
+          </button> */}
         </section>
         {/* 天氣圖 */}
         {show &&
@@ -154,7 +174,7 @@ const WeatherPage = () => {
                     </span>
                     <span className="deg">°</span>C
                   </div>
-                  <p>feels like</p>
+                  <p>體感</p>
                 </div>
               </div>
               {/* 濕度 */}
@@ -164,7 +184,7 @@ const WeatherPage = () => {
                   <span>
                     {tempData.humidity}%
                   </span>
-                  <p>Humidity</p>
+                  <p>濕度</p>
                 </div>
               </div>
             </div>

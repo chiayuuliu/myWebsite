@@ -54,13 +54,6 @@
         background: #d1ecf1;
         border: 1px solid #bee5eb;
       }
-      .inputWrap {
-        display: flex;
-        button {
-          width: 80px;
-          margin-left: 1rem;
-        }
-      }
 
       // 輸入框＋按鈕
       :where(input, button) {
@@ -83,19 +76,13 @@
       .separator {
         height: 1px;
         width: 100%;
-        background-color: #ccc;
-        margin: 25px 0;
+        // background-color: #ccc;
+        margin: 8px 0;
         display: flex;
         align-items: center;
         justify-content: center;
       }
-      .separator::before {
-        content: "or";
-        color: rgb(152, 152, 152);
-        font-size: 20px;
-        padding: 0px 15px;
-        background-color: #fff;
-      }
+      
       button {
         color: #fff;
         background-color: var(--mainBlue);
