@@ -1,0 +1,32 @@
+.Page {
+  padding-top: 32px;
+  height: 100vh;
+}
+
+.filterSelect {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+
+  p {
+    margin-right: 1rem;
+  }
+}
+.searchWrap {
+  display: flex;
+  align-items: end;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.PlayerPage {
+  .filterWrap {
+    border-bottom: 1.5px solid hsla(231, 48%, 48%, 0.5);
+  }
+  .filterItem {
+    cursor: pointer;
+  }
+  .icon {
+    cursor: pointer;
+  }
+}
