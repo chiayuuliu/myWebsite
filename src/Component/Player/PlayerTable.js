@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Paper, Table, TableBody, TableContainer, TableHead, TablePagination, TableRow, Button, ListItemText, DialogTitle, Dialog, Card } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled, createTheme } from '@mui/material/styles';
 import { indigo, red, blueGrey } from '@mui/material/colors';
@@ -72,7 +73,7 @@ const columns = [
   },
 ];
 export default function PlayerTable({ page, setPage, rowsPerPage, setRowsPerPage, displayData, handleChangePage, handleChangeRowsPerPage }) {
-
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [playerInfo, setPlayerInfo] = React.useState({})
 
@@ -104,11 +105,11 @@ export default function PlayerTable({ page, setPage, rowsPerPage, setRowsPerPage
             onClick={() => {
               handleClose()
             }} />
-        
-            <RadarChart
-              playerInfo={playerInfo}
-            />
-          
+
+          <RadarChart
+            playerInfo={playerInfo}
+          />
+
         </div>
       </Dialog>
 
@@ -116,6 +117,7 @@ export default function PlayerTable({ page, setPage, rowsPerPage, setRowsPerPage
       <Paper sx={{ width: '100%', overflow: 'hidden', mt: 3 }}>
         <TableContainer sx={{ maxHeight: 520 }}>
           <Table stickyHeader aria-label="sticky table">
+            {/* 表頭 */}
             <TableHead>
               <TableRow>
                 {columns.map((column) => (
@@ -130,15 +132,18 @@ export default function PlayerTable({ page, setPage, rowsPerPage, setRowsPerPage
                 ))}
               </TableRow>
             </TableHead>
+            
             <TableBody>
               {displayData
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((v, i) => {
                   return (
                     <TableRow>
-                      <TableCell onClick={() => {
-                        setPlayerInfo(v)
-                      }}>
+                      <TableCell
+                        onClick={() => {
+                          setPlayerInfo(v)
+                          navigate("/playerDetail");
+                        }}>
                         {v.team_name}
                       </TableCell>
                       <TableCell >

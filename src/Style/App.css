@@ -4,6 +4,7 @@
   box-sizing: border-box;
   border: 1px solid grey;
   font-family: "Poppins";
+  list-style: none;
 }
 :root {
   --mainBlue: #43affc;
