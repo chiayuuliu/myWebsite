@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Layout from './Component/Layout/Layout';
 import WeatherPage from './Pages/WeatherPage';
 import PlayerPage from './Pages/PlayerPage';
+import PlayerDetail from './Pages/PlayerDetail';
 import Home from './Pages/Home';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       </Route>
       <Route path="/weather" element={<WeatherPage />} />
       <Route path="/playerData" element={<PlayerPage />} />
+      <Route path="/playerDetail" element={<PlayerDetail />} />
     </Routes>
   );
 }

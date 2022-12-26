@@ -3,7 +3,6 @@ import '../Style/Player.scss'
 import Filter from '../Component/Player/Filter';
 import { Container, Stack } from '@mui/material';
 import PlayerTable from '../Component/Player/PlayerTable';
-import PlayerFilterTable from '../Component/Player/PlayerFilterTable';
 import Data from '../Data/players.json'
 
 const PlayerPage = () => {

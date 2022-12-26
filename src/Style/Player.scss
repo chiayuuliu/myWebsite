@@ -30,3 +30,15 @@
     cursor: pointer;
   }
 }
+.chartWarp {
+  .chart {
+    padding: 1.5rem;
+    .closeBtn {
+      cursor: pointer;
+    }
+  }
+  canvas {
+    height: 500px;
+    width: 500px;
+  }
+}
