@@ -7,9 +7,22 @@ import PlayerFilterTable from '../Component/Player/PlayerFilterTable';
 import Data from '../Data/players.json'
 
 const PlayerPage = () => {
-  const [teamName, setTeamName] = useState('');
+  const [teamName, setTeamName] = useState('All');
   const [searchWord, setSearchWord] = useState('');
-  const [displayData, setDisplayData] = useState([])
+  const [displayData, setDisplayData] = useState([...Data])
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  // 改變頁數
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  // 改變一頁顯示幾筆
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
   // 取出隊伍名稱
   const teamAll = []
@@ -17,51 +30,35 @@ const PlayerPage = () => {
     teamAll.push(v.team_name)
   }
   const teamNameArr = teamAll.filter((v, i, arr) => {
-    // console.log(v, i, arr)
     return arr.indexOf(v) === i
   })
 
   // 篩選資料
   const handleFilterData = (teamName, searchWord) => {
-    if (!teamName && !searchWord) {
+    let newData = []
+    if (teamName === "All" && !searchWord) {
       console.log(teamName, searchWord, 'no');
+      setDisplayData([...Data])
       return
     }
-    let newData = []
 
-    newData = handleSelectTeam(Data, teamName)
-    console.log(newData)
-    newData = handleSearch(newData, searchWord);
-
-    console.log('newdata', newData)
-  };
-
-  // 資料過濾
-  const handleSelectTeam = (data, teamName) => {
-    let newData = [];
-
-    if (teamName !== "all") {
-      newData = data.filter((v, i) => v.team_name === teamName);
-    } else {
-      newData = [...data];
+    if (teamName === "All" && searchWord) {
+      console.log('沒選隊名 有關鍵字')
+      newData = Data.filter((v) => v.name.toLowerCase().includes(searchWord.toLowerCase()));
+      setDisplayData(newData)
+      return
     }
 
-    console.log('過濾', newData)
-    return newData;
-  };
+    if (teamName !== "All") {
+      console.log('有隊名 關鍵字隨意')
+      newData = Data.filter((v) => v.team_name === teamName && v.name.toLowerCase().includes(searchWord.toLowerCase()));
+      setDisplayData(newData)
+      return
 
-  // 關鍵字搜尋
-  const handleSearch = (data, searchWord) => {
-    console.log('關鍵字搜尋', data, searchWord)
-    let newData = [...data];
-
-    if (searchWord) {
-      newData = data.filter((v, i) => v.name === searchWord);
     } else {
-      newData = [...data];
+      newData = [...Data];
     }
-
-    return newData;
+    setDisplayData(newData)
   };
 
   return (
@@ -77,8 +74,14 @@ const PlayerPage = () => {
         />
         <PlayerTable
           Data={Data}
+          displayData={displayData}
+          page={page}
+          setPage={setPage}
+          rowsPerPage={rowsPerPage}
+          setRowsPerPage={setRowsPerPage}
+          handleChangePage={handleChangePage}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
         />
-        {/* <PlayerFilterTable/> */}
       </Container>
     </div>
 

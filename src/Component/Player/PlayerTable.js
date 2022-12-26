@@ -70,20 +70,7 @@ const columns = [
   },
 ];
 
-export default function PlayerTable({ Data }) {
-  const [filterType, setFilterType] = React.useState("")
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
+export default function PlayerTable({ page, setPage, rowsPerPage, setRowsPerPage, displayData, handleChangePage, handleChangeRowsPerPage }) {
 
   const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
@@ -111,7 +98,7 @@ export default function PlayerTable({ Data }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {Data
+            {displayData
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((v) => {
                 return (
@@ -167,9 +154,9 @@ export default function PlayerTable({ Data }) {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[5, 10]}
         component="div"
-        count={Data.length}
+        count={displayData.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
