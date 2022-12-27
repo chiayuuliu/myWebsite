@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { Paper, Table, TableBody, TableContainer, TableHead, TablePagination, TableRow, Button, ListItemText, DialogTitle, Dialog, Card } from '@mui/material';
+import PlayerDetailPop from './PlayerDetailPop';
 import { useNavigate } from "react-router-dom";
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled, createTheme } from '@mui/material/styles';
 import { indigo, red, blueGrey } from '@mui/material/colors';
 import PlagiarismIcon from '@mui/icons-material/Plagiarism';
-import RadarChart from './RadarChart';
-import ClearIcon from '@mui/icons-material/Clear';
 const columns = [
   {
     id: 'Team',
@@ -74,15 +73,16 @@ const columns = [
 ];
 export default function PlayerTable({ page, setPage, rowsPerPage, setRowsPerPage, displayData, handleChangePage, handleChangeRowsPerPage }) {
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const [playerInfo, setPlayerInfo] = React.useState({})
+  const [playerDetail, setPlayerDetail] = React.useState([])
 
   const handleClickOpen = (v) => {
     setPlayerInfo(v)
     setOpen(true);
   };
 
-  const handleClose = (value) => {
+  const handleClose = () => {
     setOpen(false);
   };
   const StyledTableCell = styled(TableCell)(() => ({
@@ -96,23 +96,14 @@ export default function PlayerTable({ page, setPage, rowsPerPage, setRowsPerPage
     <>
 
       {/* 雷達圖 */}
-      <Dialog
-        className='chartWarp'
-        onClose={handleClose} open={open} fullWidth>
-        <div className="chart">
-          <ClearIcon
-            className='closeBtn'
-            onClick={() => {
-              handleClose()
-            }} />
-
-          <RadarChart
-            playerInfo={playerInfo}
-          />
-
-        </div>
-      </Dialog>
-
+      {open &&
+        <PlayerDetailPop
+          playerInfo={playerInfo}
+          setOpen={setOpen}
+          handleClose={handleClose}
+          playerDetail={playerDetail}
+        />
+      }
 
       <Paper sx={{ width: '100%', overflow: 'hidden', mt: 3 }}>
         <TableContainer sx={{ maxHeight: 520 }}>
@@ -132,18 +123,14 @@ export default function PlayerTable({ page, setPage, rowsPerPage, setRowsPerPage
                 ))}
               </TableRow>
             </TableHead>
-            
+
             <TableBody>
               {displayData
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((v, i) => {
                   return (
                     <TableRow>
-                      <TableCell
-                        onClick={() => {
-                          setPlayerInfo(v)
-                          navigate("/playerDetail");
-                        }}>
+                      <TableCell>
                         {v.team_name}
                       </TableCell>
                       <TableCell >
@@ -184,6 +171,7 @@ export default function PlayerTable({ page, setPage, rowsPerPage, setRowsPerPage
                         align="center"
                         sx={{ fontSize: 16 }}>
                         <Button onClick={() => {
+                          setPlayerDetail(v)
                           handleClickOpen(v)
                         }}>
                           <PlagiarismIcon
