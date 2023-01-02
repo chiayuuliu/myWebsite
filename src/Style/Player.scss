@@ -1,8 +1,3 @@
-.Page {
-  padding-top: 32px;
-  height: 100vh;
-}
-
 .filterSelect {
   display: flex;
   align-items: center;
@@ -20,6 +15,8 @@
 }
 
 .PlayerPage {
+  padding-top: 32px;
+  height: 100vh;
   .filterWrap {
     border-bottom: 1.5px solid hsla(231, 48%, 48%, 0.5);
   }
